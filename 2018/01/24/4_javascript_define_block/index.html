@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Blockly 사용법 4. JavaScript 스타일로 블록 정의하기 | Little Developer&#39;s Diary</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="google,blockly" />
+    
+    <meta name="description" content="Javascript로 블록 정의하기앞서 Blockly의 custom block을 정의하는 방법에는 Javascript만 이용하는 것과 JSON array를 같이 이용하는 것, 두 가지가 있다고 했습니다.이번 포스트에서는 그 중 첫 번째 방법인 Javascript만 이용하는 방법으로 블록을 정의해 보겠습니다. 정의할 블록이번과 다음 포스트에서 정의할 블록의">
+<meta name="keywords" content="google,blockly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blockly 사용법 4. JavaScript 스타일로 블록 정의하기">
+<meta property="og:url" content="http://vleudive.github.io/2018/01/24/4_javascript_define_block/index.html">
+<meta property="og:site_name" content="Little Developer&#39;s Diary">
+<meta property="og:description" content="Javascript로 블록 정의하기앞서 Blockly의 custom block을 정의하는 방법에는 Javascript만 이용하는 것과 JSON array를 같이 이용하는 것, 두 가지가 있다고 했습니다.이번 포스트에서는 그 중 첫 번째 방법인 Javascript만 이용하는 방법으로 블록을 정의해 보겠습니다. 정의할 블록이번과 다음 포스트에서 정의할 블록의">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://vleudive.github.io/img/Cover_4.png">
+<meta property="og:updated_time" content="2018-02-07T13:47:43.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blockly 사용법 4. JavaScript 스타일로 블록 정의하기">
+<meta name="twitter:description" content="Javascript로 블록 정의하기앞서 Blockly의 custom block을 정의하는 방법에는 Javascript만 이용하는 것과 JSON array를 같이 이용하는 것, 두 가지가 있다고 했습니다.이번 포스트에서는 그 중 첫 번째 방법인 Javascript만 이용하는 방법으로 블록을 정의해 보겠습니다. 정의할 블록이번과 다음 포스트에서 정의할 블록의">
+<meta name="twitter:image" content="http://vleudive.github.io/img/Cover_4.png">
+    
+    <link rel="canonical" href="http://vleudive.github.io/2018/01/24/4_javascript_define_block/"/>
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112987060-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">A record of my learning &amp; trying!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blockly/">Blockly</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/VleuDive">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Blockly/">Blockly</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-4_javascript_define_block" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Blockly 사용법 4. JavaScript 스타일로 블록 정의하기
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/24/4_javascript_define_block/" class="article-date">
+            <time datetime="2018-01-24T01:05:48.000Z" itemprop="datePublished">2018-01-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/blockly/">blockly</a>, <a class="tag-link" href="/tags/google/">google</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/Cover_4.png" alt=""></p>
+<h1 id="Javascript로-블록-정의하기"><a href="#Javascript로-블록-정의하기" class="headerlink" title="Javascript로 블록 정의하기"></a>Javascript로 블록 정의하기</h1><p>앞서 Blockly의 custom block을 정의하는 방법에는 Javascript만 이용하는 것과 JSON array를 같이 이용하는 것, 두 가지가 있다고 했습니다.<br>이번 포스트에서는 그 중 첫 번째 방법인 Javascript만 이용하는 방법으로 블록을 정의해 보겠습니다.</p>
+<h2 id="정의할-블록"><a href="#정의할-블록" class="headerlink" title="정의할 블록"></a>정의할 블록</h2><p>이번과 다음 포스트에서 정의할 블록의 이름은 Short_math이며, 다음과 같은 모양을 하고 있습니다.</p>
+<p><img src="/img/short_math_ex.png" alt="short_math"></p>
+<p>이 블록은 Top+Bottom connection을 가지고 있으며, 2개의 Value Input을 가집니다. 또한 중간에 dropdown field가 있어 연산의 종류를 선택할 수 있습니다.<br>이 블록은 ‘짧은 표현식’을 구현하고 있습니다. C++ 이나 Java, Python 등의 문법으로 보자면 <strong>a+=b</strong> 식의 연산을 나타내는 블록입니다. 단, 중간에 dropdown field를 두어 연산의 종류를 선택할 수 있게 했기 때문에 결과적으로는 한 블록에서 a+=b, a-=b, a/=b, a*=b 의 연산이 모두 가능합니다.</p>
+<h2 id="블록-정의-코드"><a href="#블록-정의-코드" class="headerlink" title="블록 정의 코드"></a>블록 정의 코드</h2><p>Javascript만 사용하여 Short_math를 정의하는 코드는 다음과 같습니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Blockly.Blocks[<span class="string">'short_math'</span>] = &#123;</span><br><span class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.appendValueInput(<span class="string">"a"</span>)</span><br><span class="line">        .setCheck(<span class="string">"Number"</span>);</span><br><span class="line">    <span class="keyword">this</span>.appendDummyInput()</span><br><span class="line">        .appendField(<span class="keyword">new</span> Blockly.FieldDropdown([[<span class="string">"+"</span>,<span class="string">"+"</span>], [<span class="string">"*"</span>,<span class="string">"*"</span>], [<span class="string">"-"</span>,<span class="string">"-"</span>], [<span class="string">"/"</span>,<span class="string">"/"</span>]]), <span class="string">"select"</span>)</span><br><span class="line">        .appendField(<span class="string">"="</span>);</span><br><span class="line">    <span class="keyword">this</span>.appendValueInput(<span class="string">"b"</span>)</span><br><span class="line">        .setCheck(<span class="string">"Number"</span>);</span><br><span class="line">    <span class="keyword">this</span>.setInputsInline(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">this</span>.setPreviousStatement(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">this</span>.setNextStatement(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">this</span>.setColour(<span class="number">260</span>);</span><br><span class="line"> <span class="keyword">this</span>.setTooltip(<span class="string">"Short version of arithmetic calculations"</span>);</span><br><span class="line"> <span class="keyword">this</span>.setHelpUrl(<span class="string">""</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">코드를 하나하나 분석해 보겠습니다.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### Block 정의 함수</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Block 정의 함수는 다음과 같은 형태를 하고 있습니다.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">Blockly.Blocks[<span class="string">'블록 이름'</span>]=&#123;</span><br><span class="line">    init:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 블록의 특성 정의</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이 구문은 한 .js 파일 내에 여러 번 호출될 수 있으며, 해당 파일 안에 정의하고 싶은 블록의 개수만큼 호출되어야 합니다. JSON array를 활용하는 방식에서는 한 번의 함수 호출로 한꺼번에 여러 개의 블록을 정의할 수 있지만, Javascript 방식의 Blockly.Blocks[]의 경우 한 번에 한 블록밖에 정의하지 못합니다. </p>
+<p>지금 정의하는 Short_math와 같은 간단한 블록을 정의할 때는 이 구문을 살짝 응용해서, init 메소드를 삭제하고 다음과 같이 사용해도 큰 문제는 없지만, mutator나 extension 고급 기능을 추가하게 되면 init 외에도 다양한 메소드를 추가하게 되기 때문에, 복잡한 구조의 블록의 경우 init을 생략하지 않는 위의 방법이 더 바람직합니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Blockly.Blocks[<span class="string">'블록 이름'</span>]=&#123;</span><br><span class="line">        <span class="comment">// 블록의 특성 정의</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="첫-번째-Value-Input-정의"><a href="#첫-번째-Value-Input-정의" class="headerlink" title="첫 번째 Value Input 정의"></a>첫 번째 Value Input 정의</h3><p>Short_math 블록은 두 개의 value input을 가집니다. 그 중 첫 번째 Value Input을 추가하는 부분은 다음과 같습니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.appendValueInput(<span class="string">"a"</span>)</span><br><span class="line">      .setCheck(<span class="string">"Number"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>this</strong>는 지금 정의하고 있는 바로 이 블록, Short_math를 의미합니다.</p>
+<p><strong>this.appendValueInput(“a”)</strong> 는 이 블록에 ‘a’라는 이름을 가지고 있는 value input을 추가하겠다는 뜻입니다. 여기서 정의해 준 이름 ‘a’는 블록에는 표시되지 않지만, code generation시에 block의 구성 요소를 지정하는 데 사용됩니다.</p>
+<p><strong>setCheck(“Number”)</strong> 는 이 input이 받을 수 있는 자료형을 ‘Number’로 고정합니다. 이렇게 설정해 놓으면, ‘Number’ 이외의 자료형(ex: String) 을 가진 value input은 이 블록에 적용되지 못합니다. 이 함수의 이름이 setCheck인 것은, input 내에서 타입을 지정해 주는 프로퍼티의 이름이 ‘check’이기 때문입니다. Javascript 스타일로 블록을 정의할 때는 이런 식으로, setXXX(); 와 같은 하위 메소드를 호출해 블록 또는 input의 세부 프로퍼티를 조작합니다.</p>
+<h3 id="Dropdown-Field-추가"><a href="#Dropdown-Field-추가" class="headerlink" title="Dropdown Field 추가"></a>Dropdown Field 추가</h3><p>두 번째로 정의해야 하는 부분은 dropdown field입니다. dropdown field는 다음과 같이 정의합니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.appendDummyInput()</span><br><span class="line">       .appendField(<span class="keyword">new</span> Blockly.FieldDropdown([[<span class="string">"+"</span>,<span class="string">"+"</span>], [<span class="string">"*"</span>,<span class="string">"*"</span>], [<span class="string">"-"</span>,<span class="string">"-"</span>], [<span class="string">"/"</span>,<span class="string">"/"</span>]]), <span class="string">"select"</span>)</span><br><span class="line">       .appendField(<span class="string">"="</span>);</span><br></pre></td></tr></table></figure>
+<p>이 부분에서 <strong>“Field 사용 시에는 Dummy input을 같이 사용하는 경우가 많다”</strong> 는 특징이 잘 드러납니다. 여기서도 this는 지금 정의하고 있는 Short_math 블록을 나타냅니다.</p>
+<p><strong>appendDummyInput()</strong> 은 이 블록에 dummy input을 추가하는 함수입니다. 이 dummy input의 field로 dropdown field를 추가하게 될 것입니다.<br>이 코드에서 총 두 번 등장하는 <strong>apendField()</strong> 구문이 바로 input에 field를 추가하는 구문입니다. 위에서 등장한 setXXX() 류의 함수가 블록에 이미 있던 기본 property를 조작하는 것에 가깝다면, appendField() 함수는 해당 블록에 아예 새로운 field를 추가해 블록의 구조 자체를 바꾸는 함수입니다.</p>
+<p>첫 번째로 등장하는 appendField()에는 <strong>new Blockly.FieldDropdown([[“+”,”+”],[“<em>“,”</em>“],[“-“,”-“],[“/“,”/“]]),”select”)</strong> 라는 구문이 파라미터로 전달되는데, 이 파라미터는 바로 새로운 dropdown field를 생성하는 생성자 구문입니다. </p>
+<p>그 중 <strong>[[“+”,”+”],[“<em>“,”</em>“],[“-“,”-“],[“/“,”/“]]</strong> 부분은 dropdown field 의 option을 지정하는 리스트입니다. 리스트 내 항목의 개수는 얼마든지 늘릴 수 있으며, 이 리스트는 한 쌍의 string이 들어 있는 더 작은 리스트의 집합으로 이루어져 있습니다. 이 string 쌍에서, 앞의 string은 블록 사용자가 직접 보고 선택하게 될, 즉 블록에 직접 표시될 option 이름이고 뒤의 string은 프로그램 내에서 사용되는 option이름입니다. 이처럼 두 이름을 같게 해도 무방합니다. 또한 <strong>“select”</strong> 는 이 dropdown field 자체의 이름을 지정한 것입니다. 후에 code generation 등을 할 때 지정자로서 요긴히 쓰입니다.</p>
+<p>두 번쨰로 등장하는 appendField()에는 “=”이라는 string 하나만 전달되었습니다. 이는 =라는 문자를 표시하는 label로써, label은 이런 식으로 string 하나만 전달해서 추가할 수도 있습니다.</p>
+<h3 id="두-번째-Value-Input-정의-및-블록-세부-속성-정의"><a href="#두-번째-Value-Input-정의-및-블록-세부-속성-정의" class="headerlink" title="두 번째 Value Input 정의 및 블록 세부 속성 정의"></a>두 번째 Value Input 정의 및 블록 세부 속성 정의</h3><p>두 번째 Value Input을 정의하고 남아 있는 블록의 세부 속성을 정의하는 코드는 다음과 같습니다. 두 번째 value input을 정의하는 구문은 첫 번째 value input을 정의하는 구문과 거의 유사하므로 넘어갑니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.appendValueInput(<span class="string">"b"</span>)</span><br><span class="line">    .setCheck(<span class="string">"Number"</span>);</span><br><span class="line"><span class="keyword">this</span>.setInputsInline(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">this</span>.setPreviousStatement(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">this</span>.setNextStatement(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">this</span>.setColour(<span class="number">260</span>);</span><br><span class="line"><span class="keyword">this</span>.setTooltip(<span class="string">"Short version of arithmetic calculations"</span>);</span><br><span class="line"><span class="keyword">this</span>.setHelpUrl(<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+<p>코드의 세 번째 줄부터는 블록 자체에 대한 세부 속성을 정의합니다.</p>
+<p><strong>setInputsInline()</strong> 은 Input을 Inline 형태로 정렬할 것인지 아닌지를 결정하는 함수입니다. 파리미터로는 true, false의 boolean 값이 들어가고, true로 설정되었을 경우 inline 정렬로 설정됩니다.<br>Inline정렬과, inline 정렬이 아닌 블록(automatic 정렬이라고도 합니다.)은 다음과 같이 input 결합부의 모양에서 차이가 납니다.</p>
+<p><img src="/img/inline_ex.png" alt="inline_ex"></p>
+<p><img src="/img/automatic_ex.png" alt="auto_ex"></p>
+<p>Automatic 정렬의 경우 input이 많아지면 블록이 위아래로 길어지는 형태가 되기 때문에, output이 있는 블록보다는 위 또는 아래 connection이 있는 블록에 적용하는 것이 나중에 다른 블록과 결합했을 때 더 보기 좋아집니다.</p>
+<p><strong>setPreviousStatement()</strong> 는 previous statement(top connection)의 유무를 정해 주는 함수입니다. 생략 시 previous statement가 없는 블록이 되고, 파라미터를 true로 하여 이 함수를 호출해 주면 블록에 previous statement가 생겨 다음과 같은 형태가 됩니다.</p>
+<p><img src="/img/top_block.png" alt="prev_ex"></p>
+<p><strong>setNextStatement()</strong> 는 next statement(bottom connection)의 유무를 정해 주는 함수입니다. setPreviousStatement()처럼 생략할 시 next statement가 없는 블록이 됩니다. 파라미터를 true로 한 채 이 함수를 호출하면 블록은 다음과 같은 모양이 되지요.</p>
+<p><img src="/img/bottom.png" alt="next_ex"></p>
+<p>이번 예에서는 setPreviousStatement()와 setNextStatement()를 둘 다 호출했으므로, previous statement와 next statement가 모두 존재하는 블록이 만들어집니다. 이런 형태가 되지요.</p>
+<p><img src="/img/top_bottom_block.png" alt="both_ex"></p>
+<p><strong>setColour</strong> 는 블록의 색깔을 설정해 주는 함수입니다. Blockly는 블록의 색을 정의할 때 HSV(Hue-Saturation-Value) 모델들 이용합니다. 그 중에서도 이 함수로 직접 정해 줄 수 있는 값은 Hue이죠. 이렇게 하면 색상의 다양성을 보장하면서도, 특정 블록이 너무 튀어 보이지 않고 모든 블록의 색이 잘 어우러지도록 할 수 있습니다. 만약 Hue 외에 Saturation과 Value도 바꾸어 전체적인 색감을 조정하고 싶다면, 다른 설정 파일에 정의되어 있는 해당 값을 직접 바꾸어 줄 수도 있습니다. 가장 쉽게 바꿀 수 있는 Hue는 각도로 표현되며, 0~360도 사이의 값으로 지정해 주어야 합니다.<br>각도 값에 따른 색상의 변화는 아래 스펙트럼에서 확인해 볼 수 있습니다.</p>
+<p><img src="/img/hue_spectrum.png" alt="spectrum"></p>
+<p><strong>setTooltip</strong> 함수는 블록에 tooltip을 부여해 줍니다. Tooltip은 블록에 마우스 커서를 올려 놓고 일정 시간이 지나면 나타나는 작은 글 상자이며, 이 안에 들어가는 문구를 사용자가 마음대로 정해 줄 수 있습니다. 보통 블록에 대한 간략한 설명을 담아 놓으며, 이 함수의 파라메터로 들어가는 String 값이 해당 블록의 tooltip 내용이 됩니다.</p>
+<p>마지막으로, <strong>setHelpUrl()</strong> 함수가 있습니다. 이 함수의 파라미터로는 string이 들어가며, 이 string은 특정 URL을 나타냅니다. Tooltip만으로는 블록에 대해 충분히 설명할 수 없을 때, 더 상세한 설명을 제공해 주는 페이지로 직접 이동할 수 있게 하기 위해 이 함수를 이용합니다. Help Url이 설정된 블록 위에서 오른쪽 마우스를 클릭하면 다음과 같은 context menu가 나타나고, Help를 클릭 시 이 함수를 통해 지정해 놓은 웹 페이지로 바로 이동합니다.</p>
+<p><img src="/img/help_context.png" alt="help_context_menu"></p>
+<p>이렇게 해서 하나의 완전한 블록이 정의됩니다. 아직 실제 코드가 매핑되어 있지는 않지만, 블록의 모양만큼은 완성되어 있지요.<br>이런 블록을 정의하는 방법에는 한 가지가 더 있는데, 그 방법에 대해서는 다른 포스트에서 다루겠습니다.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://vleudive.github.io/2018/01/24/4_javascript_define_block/" data-id="cjdd5r5200001csvmapx9cilo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/hot1999130" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/b/109422949033119695949/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/VleuDive" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/24/5_JSON_define_block/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Blockly 사용법 5. JSON array 스타일로 블록 정의하기
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/01/23/3_input_types/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Blockly 사용법 3. Input과 Field 이해하기</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/7_Blockly_on_web/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_7.png)" alt="Blockly 사용법 7. 웹에서 Blockly 사용하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/7_Blockly_on_web/" class="title">Blockly 사용법 7. 웹에서 Blockly 사용하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T08:10:10.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/6_code_generation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_6.png)" alt="Blockly 사용법 6. Code generator 작성하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/6_code_generation/" class="title">Blockly 사용법 6. Code generator 작성하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T01:58:04.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/5_JSON_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_5.png)" alt="Blockly 사용법 5. JSON array 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/5_JSON_define_block/" class="title">Blockly 사용법 5. JSON array 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T04:55:13.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/4_javascript_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_4.png)" alt="Blockly 사용법 4. JavaScript 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/4_javascript_define_block/" class="title">Blockly 사용법 4. JavaScript 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T01:05:48.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/23/3_input_types/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_3.png)" alt="Blockly 사용법 3. Input과 Field 이해하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/23/3_input_types/" class="title">Blockly 사용법 3. Input과 Field 이해하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-23T08:10:02.000Z" itemprop="datePublished">2018-01-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Blockly/">Blockly</a><span class="category-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockly/">blockly</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/">google</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blockly/" style="font-size: 10px;">blockly</a> <a href="/tags/google/" style="font-size: 10px;">google</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 VleuDive</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'little-developers-diary';
+    
+    
+    var disqus_url = 'http://vleudive.github.io/2018/01/24/4_javascript_define_block/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Blockly 사용법 1. Blockly 개요 | Little Developer&#39;s Diary</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="google,blockly" />
+    
+    <meta name="description" content="Blockly란?Google이 만든 Blockly 라이브러리는 웹, ios, Android에서 구동하는블록 기반 프로그래밍 앱을 만들기 위해 사용됩니다. 주의하실 점은 Blockly 라이브러리는 개발자를 위한 도구이며,우리가 흔히 알고 있는, ‘블록을 맞추어 프로그래밍을 할 수 있게 만든 플랫폼 또는 앱’은 Blockly 어플리케이션(Blockly App">
+<meta name="keywords" content="google,blockly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blockly 사용법 1. Blockly 개요">
+<meta property="og:url" content="http://vleudive.github.io/2018/01/23/1_Blockly_intro/index.html">
+<meta property="og:site_name" content="Little Developer&#39;s Diary">
+<meta property="og:description" content="Blockly란?Google이 만든 Blockly 라이브러리는 웹, ios, Android에서 구동하는블록 기반 프로그래밍 앱을 만들기 위해 사용됩니다. 주의하실 점은 Blockly 라이브러리는 개발자를 위한 도구이며,우리가 흔히 알고 있는, ‘블록을 맞추어 프로그래밍을 할 수 있게 만든 플랫폼 또는 앱’은 Blockly 어플리케이션(Blockly App">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://vleudive.github.io/img/Cover_1.png">
+<meta property="og:updated_time" content="2018-02-07T13:35:19.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blockly 사용법 1. Blockly 개요">
+<meta name="twitter:description" content="Blockly란?Google이 만든 Blockly 라이브러리는 웹, ios, Android에서 구동하는블록 기반 프로그래밍 앱을 만들기 위해 사용됩니다. 주의하실 점은 Blockly 라이브러리는 개발자를 위한 도구이며,우리가 흔히 알고 있는, ‘블록을 맞추어 프로그래밍을 할 수 있게 만든 플랫폼 또는 앱’은 Blockly 어플리케이션(Blockly App">
+<meta name="twitter:image" content="http://vleudive.github.io/img/Cover_1.png">
+    
+    <link rel="canonical" href="http://vleudive.github.io/2018/01/23/1_blockly_intro/"/>
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112987060-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">A record of my learning &amp; trying!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blockly/">Blockly</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/VleuDive">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Blockly/">Blockly</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-1_Blockly_intro" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Blockly 사용법 1. Blockly 개요
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/23/1_Blockly_intro/" class="article-date">
+            <time datetime="2018-01-23T02:40:39.000Z" itemprop="datePublished">2018-01-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/blockly/">blockly</a>, <a class="tag-link" href="/tags/google/">google</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/Cover_1.png" alt=""></p>
+<h1 id="Blockly란"><a href="#Blockly란" class="headerlink" title="Blockly란?"></a>Blockly란?</h1><p>Google이 만든 <a href="https://developers.google.com/blockly/" target="_blank" rel="noopener">Blockly</a> 라이브러리는 웹, ios, Android에서 구동하는<br>블록 기반 프로그래밍 앱을 만들기 위해 사용됩니다.</p>
+<p>주의하실 점은 <strong>Blockly 라이브러리</strong>는 개발자를 위한 도구이며,<br>우리가 흔히 알고 있는, ‘블록을 맞추어 프로그래밍을 할 수 있게 만든 플랫폼 또는 앱’<br>은 <strong>Blockly 어플리케이션(Blockly Apps)</strong> 라고 불린다는 것입니다.</p>
+<p>그 용도에 맞게, Blockly에서는 다양한 Default Block을 제공하며, 원한다면 얼마든지<br>자신이 원하는 모양과 기능의 블록을 만들어 사용할 수 있습니다.</p>
+<p>또한 위에서 언급한 것처럼, Blockly 앱은 현재 웹, ios, Android 상에서 구동 가능합니다. 이 시리즈에서는 웹 페이지 또는 웹 어플리케이션에서 구동하는 Blockly App을 만드는 것을 중심으로 설명하려 합니다. 참고로, 각<br> 환경에서 Blockly 라이브러리를 사용하는 방법이 조금씩 달라지니,<br>웹 이외의 환경에서 Blockly App을 개발하시려는 분들은<a href="https://developers.google.com/blockly/guides/overview" target="_blank" rel="noopener">Blockly 공식 가이드(영문)</a> 를 참고하실 수 있습니다.<br> 사실 개발 환경이 달라져도 기본 개요는 같지만 각 플랫폼에 맞게 용어나 코딩 방법 등이 달라집니다.</p>
+<h2 id="Blockly-지원-언어"><a href="#Blockly-지원-언어" class="headerlink" title=" Blockly 지원 언어"></a> Blockly 지원 언어</h2><p> 사용자가 보기에 Blockly가 만들어 낸 Block들은 코딩을 위해 만들어진 기초 코드 조각처럼 보이지만, 이 블록들은<br> 사실 실제 프로그래밍 언어로 된 코드가 매핑되어 있는 그래픽 요소 조각입니다.<br> Blockly 블록들은 기본적으로 <strong>Javascript</strong> 또는 <strong>JSON array</strong>로 그 형태가 만들어져 있으며, 각 블록마다 본격적인<br>고급 프로그래밍 언어로 되어 있는 코드가 매핑되어 있습니다.</p>
+<p>Blockly 블록에 매핑할 수 있는 언어는 현재로서는 이 5가지입니다.</p>
+<ul>
+<li>Javascript</li>
+<li>Python</li>
+<li>PHP</li>
+<li>Lua</li>
+<li>Dart</li>
+</ul>
+<p>블록마다 실제 실행 가능한 코드가 정해져 있기 때문에, 자신이 조합한<br>블록을 코드로 바꾸어 바로바로 확인하거나 실행하는 것도 가능합니다. 이에 대해서는<br>다른 항목에서 서술하겠습니다.</p>
+<h2 id="Blockly-어플리케이션-개발-과정"><a href="#Blockly-어플리케이션-개발-과정" class="headerlink" title=" Blockly 어플리케이션 개발 과정"></a> Blockly 어플리케이션 개발 과정</h2><p> Blockly 라이브러리는 개발자를 위한 라이브러리이며, 그것이 실제로 활용되기 위해서는<br> 이 라이브러리를 이용해 어플리케이션을 만들어 사용해야 합니다. 상술한 것처럼, Blockly<br> 어플리케이션은 웹, ios, Android의 3가지 플랫폼에 적용 가능합니다.</p>
+<p>웹을 기준으로 보았을 때, Blockly Application을 만드는 기본 단계는 다음과 같습니다.</p>
+<ol>
+<li>웹 페이지를 만든다.</li>
+<li>만든 웹 페이지에 Blockly editor 를 삽입한다.</li>
+<li>필요한 custom block을 정의한다.</li>
+<li>만든 블록에 code generator를 붙여, 블록에 실제 프로그래밍 언어로 되어 있는 코드를 매핑한다.</li>
+<li>만든 블록을 editor에 추가한다.</li>
+<li>나머지 필요한 기능들을 구현한다.</li>
+</ol>
+<h2 id="Blockly-라이브러리-다운로드-및-시작하기-Web"><a href="#Blockly-라이브러리-다운로드-및-시작하기-Web" class="headerlink" title="Blockly 라이브러리 다운로드 및 시작하기(Web)"></a>Blockly 라이브러리 다운로드 및 시작하기(Web)</h2><p>Blockly는 기본적으로 오픈소스 라이브러리입니다. <a href="https://github.com/google/blockly" target="_blank" rel="noopener">Blockly 공식 Github 레포지터리</a><br>에서 소스를 clone 해 사용할 수 있습니다. Blockly는 서버의 개입 없이 client-side 에서 작동하며, 대부분의 경우 별다른 3rd-party dependency를 필요로 하지 않기 때문에,<br>이렇게 소스코드를 다운받는 것으로 준비는 끝납니다.<br><img src="/img/fixed_demo.png" alt="screenshot"><br>Blockly 레포지터리를 제대로 clone해 오셨다면 해당 폴더의 <strong>demos/fixed/index.html</strong>을 실행하여 작동 테스트를 해 볼 수 있습니다.<br>이렇게 환경 구축을 끝내고 나면, 이제 Blockly 라이브러리를 사용해 어플리케이션을 만들 준비가 된 것입니다.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://vleudive.github.io/2018/01/23/1_Blockly_intro/" data-id="cjdd5r51r0000csvmg7k8kzd8" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/hot1999130" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/b/109422949033119695949/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/VleuDive" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/23/2_define_blocks/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Blockly 사용법 2. Custom Block 정의 시작하기
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/7_Blockly_on_web/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_7.png)" alt="Blockly 사용법 7. 웹에서 Blockly 사용하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/7_Blockly_on_web/" class="title">Blockly 사용법 7. 웹에서 Blockly 사용하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T08:10:10.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/6_code_generation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_6.png)" alt="Blockly 사용법 6. Code generator 작성하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/6_code_generation/" class="title">Blockly 사용법 6. Code generator 작성하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T01:58:04.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/5_JSON_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_5.png)" alt="Blockly 사용법 5. JSON array 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/5_JSON_define_block/" class="title">Blockly 사용법 5. JSON array 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T04:55:13.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/4_javascript_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_4.png)" alt="Blockly 사용법 4. JavaScript 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/4_javascript_define_block/" class="title">Blockly 사용법 4. JavaScript 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T01:05:48.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/23/3_input_types/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_3.png)" alt="Blockly 사용법 3. Input과 Field 이해하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/23/3_input_types/" class="title">Blockly 사용법 3. Input과 Field 이해하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-23T08:10:02.000Z" itemprop="datePublished">2018-01-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Blockly/">Blockly</a><span class="category-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockly/">blockly</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/">google</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blockly/" style="font-size: 10px;">blockly</a> <a href="/tags/google/" style="font-size: 10px;">google</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 VleuDive</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'little-developers-diary';
+    
+    
+    var disqus_url = 'http://vleudive.github.io/2018/01/23/1_Blockly_intro/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

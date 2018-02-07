@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Blockly 사용법 5. JSON array 스타일로 블록 정의하기 | Little Developer&#39;s Diary</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="google,blockly" />
+    
+    <meta name="description" content="JSON array 스타일로 블록 정의하기지난 포스트에서는 처음부터 끝까지 Javascript 스타일로 블록을 정의하는 방법을 살펴보았습니다. 이번 포스트에서는 블록을 정의하는 또 다른 방법인 JSON array를 사용하는 방법 을 다루겠습니다. 이 방법은 Google Blockly 공식 가이드에서도 더 권장하는 방법이고, 익숙해진다면 Javascript">
+<meta name="keywords" content="google,blockly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blockly 사용법 5. JSON array 스타일로 블록 정의하기">
+<meta property="og:url" content="http://vleudive.github.io/2018/01/24/5_JSON_define_block/index.html">
+<meta property="og:site_name" content="Little Developer&#39;s Diary">
+<meta property="og:description" content="JSON array 스타일로 블록 정의하기지난 포스트에서는 처음부터 끝까지 Javascript 스타일로 블록을 정의하는 방법을 살펴보았습니다. 이번 포스트에서는 블록을 정의하는 또 다른 방법인 JSON array를 사용하는 방법 을 다루겠습니다. 이 방법은 Google Blockly 공식 가이드에서도 더 권장하는 방법이고, 익숙해진다면 Javascript">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://vleudive.github.io/img/Cover_5.png">
+<meta property="og:updated_time" content="2018-02-07T14:07:18.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blockly 사용법 5. JSON array 스타일로 블록 정의하기">
+<meta name="twitter:description" content="JSON array 스타일로 블록 정의하기지난 포스트에서는 처음부터 끝까지 Javascript 스타일로 블록을 정의하는 방법을 살펴보았습니다. 이번 포스트에서는 블록을 정의하는 또 다른 방법인 JSON array를 사용하는 방법 을 다루겠습니다. 이 방법은 Google Blockly 공식 가이드에서도 더 권장하는 방법이고, 익숙해진다면 Javascript">
+<meta name="twitter:image" content="http://vleudive.github.io/img/Cover_5.png">
+    
+    <link rel="canonical" href="http://vleudive.github.io/2018/01/24/5_json_define_block/"/>
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112987060-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">A record of my learning &amp; trying!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blockly/">Blockly</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://about.me/VleuDive">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Blockly/">Blockly</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-5_JSON_define_block" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Blockly 사용법 5. JSON array 스타일로 블록 정의하기
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/24/5_JSON_define_block/" class="article-date">
+            <time datetime="2018-01-24T04:55:13.000Z" itemprop="datePublished">2018-01-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/blockly/">blockly</a>, <a class="tag-link" href="/tags/google/">google</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/img/Cover_5.png" alt=""></p>
+<h1 id="JSON-array-스타일로-블록-정의하기"><a href="#JSON-array-스타일로-블록-정의하기" class="headerlink" title="JSON array 스타일로 블록 정의하기"></a>JSON array 스타일로 블록 정의하기</h1><p><a href="https://vleudive.github.io/2018/01/24/javascript-define-block/">지난 포스트</a>에서는 처음부터 끝까지 Javascript 스타일로 블록을 정의하는 방법을 살펴보았습니다. 이번 포스트에서는 블록을 정의하는 또 다른 방법인 <strong>JSON array를 사용하는 방법</strong> 을 다루겠습니다. 이 방법은 Google Blockly 공식 가이드에서도 더 권장하는 방법이고, 익숙해진다면 Javascript만 사용한 스타일에 비해 훨씬 보기 좋고 이해하기가 쉽습니다. 또한 JSON이 널리 이용되는 데이터 표준 중 하나이기 때문에, 표준과의 호환성을 생각하면 이 방법을 사용하는 것이 더 낫습니다.</p>
+<h2 id="정의할-블록"><a href="#정의할-블록" class="headerlink" title="정의할 블록"></a>정의할 블록</h2><p><img src="/img/short_math_ex.png" alt="short_math"></p>
+<p>정의할 블록은 지난 포스트와 같은 <strong>Short_math</strong> 블록입니다. 지난 포스트에서 Javascript 스타일로 정의한 것과 역할도, 모양도 모두 같으며, 블록을 정의하는 방식만 살짝 달라집니다.</p>
+<h2 id="블록-정의-코드"><a href="#블록-정의-코드" class="headerlink" title="블록 정의 코드 "></a>블록 정의 코드 </h2><p>JSON array를 사용하여 Short_math를 정의하는 코드는 다음과 같습니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Blockly.defineBlocksWithJsonArray(</span><br><span class="line">    [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"short_math"</span>,</span><br><span class="line">        <span class="string">"message0"</span>: <span class="string">"%1 %2 = %3 %4"</span>,</span><br><span class="line">        <span class="string">"args0"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"input_value"</span>,</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">                <span class="string">"check"</span>: <span class="string">"Number"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"field_dropdown"</span>,</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"select"</span>,</span><br><span class="line">                <span class="string">"options"</span>: [</span><br><span class="line">                    [</span><br><span class="line">                        <span class="string">"+"</span>,</span><br><span class="line">                        <span class="string">"+"</span></span><br><span class="line">                    ],</span><br><span class="line">                    [</span><br><span class="line">                        <span class="string">"*"</span>,</span><br><span class="line">                        <span class="string">"*"</span></span><br><span class="line">                    ],</span><br><span class="line">                    [</span><br><span class="line">                        <span class="string">"-"</span>,</span><br><span class="line">                        <span class="string">"-"</span></span><br><span class="line">                    ],</span><br><span class="line">                    [</span><br><span class="line">                        <span class="string">"/"</span>,</span><br><span class="line">                        <span class="string">"/"</span></span><br><span class="line">                    ]</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"input_dummy"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"input_value"</span>,</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"b"</span>,</span><br><span class="line">                <span class="string">"check"</span>: <span class="string">"Number"</span></span><br><span class="line">            &#125;],</span><br><span class="line">        <span class="string">"inputsInline"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">"nextStatement"</span>:<span class="literal">null</span>,</span><br><span class="line">        <span class="string">"previousStatement"</span>:<span class="literal">null</span>,</span><br><span class="line">        <span class="string">"colour"</span>: <span class="number">260</span>,</span><br><span class="line">        <span class="string">"tooltip"</span>: <span class="string">"Short version of arithmetic calculations"</span>,</span><br><span class="line">        <span class="string">"helpUrl"</span>: <span class="string">""</span></span><br><span class="line">       &#125;,</span><br><span class="line">    ]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>코드를 하나하나 분석해 보겠습니다.</p>
+<h3 id="Block-정의-함수"><a href="#Block-정의-함수" class="headerlink" title="Block 정의 함수"></a>Block 정의 함수</h3><p>Block 정의 함수는 다음과 같은 형태를 하고 있습니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Blockly.defineBlocksWithJsonArray( <span class="comment">/*JSON array*/</span>);</span><br></pre></td></tr></table></figure>
+<p>Javascript 형태로 정의할 때보다 매우 간단해진 것을 볼 수 있습니다. 이 함수가 받는 파라미터의 형태는 JSON array이며, 이 array 안에 얼마든지 많은 블록을 정의할 수 있습니다. 그렇기 때문에 이 함수는 전체 파일 내에서 한 번만 호출해도 되며, 한 번의 호출로 여러 블록을 정의할 수 있습니다. 주의하실 점은, JSON array 형태로 블록을 정의한다고 해서 <strong>파일 내에 JSON array만 달랑 정의하거나, 블록 정의 파일 자체를 .json 파일로 만들면 안 된다</strong>는 것입니다. 블록 정의 파일은 .js 파일이 되어야 하며, JSON array를 활용하는 정의 방식에서도 이 함수를 이용해 블록의 정의가 담겨 있는 JSON array를 받는 식으로 블록 정의를 해야 합니다. 그렇게 하지 않으면 새로운 block이 전혀 인식되지 못합니다.</p>
+<h3 id="JSON-array의-형태"><a href="#JSON-array의-형태" class="headerlink" title="JSON array의 형태"></a>JSON array의 형태</h3><p>JSON은 기본적으로 중괄호 { } 안에 “key”:”value” 쌍의 연속으로 하나의 객체를 정의합니다.</p>
+<p>JSON array는 이런 JSON 객체가 여러 개 모인 것으로, [] 으로 표현합니다.</p>
+<p>위 코드의 Blockly.defineBlocksWithJsonArray() 함수의 파라미터는 언뜻 보면 매우 길어 보이지만 실제로는 다음과 같은 구조를 하고 있습니다.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"블록 1의 속성 1"</span>: <span class="string">"블록 1의 값 1"</span>,</span><br><span class="line">    <span class="attr">"블록 1의 속성 2"</span>: <span class="string">"블록 1의 값 2"</span>,</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"블록 2의 속성 1"</span>: <span class="string">"블록 2의 값 1"</span>,</span><br><span class="line">    <span class="attr">"블록 2의 속성 2"</span>: <span class="string">"블록 2의 값 2"</span>,</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">  &#125;,</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>즉 배열 안의 객체(중괄호로 묶인 범위) 하나가 블록 하나를 나타낸다고 할 수 있습니다. </p>
+<h3 id="Type과-Message"><a href="#Type과-Message" class="headerlink" title="Type과 Message"></a>Type과 Message</h3><p>JSON array는 다음과 같이 시작합니다.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"type": "short_math",</span><br><span class="line">"message0": "%1 %2 = %3 %4",</span><br></pre></td></tr></table></figure>
+<p><strong>type</strong>은 <strong>블록의 이름</strong>입니다. 뒤에 XML 구문 수정을 통해 workspace에 블록을 추가할 때 이 type을 사용하게 됩니다. Javascript 스타일로 정의했을 때는 Blockly.Blocks[“short_math”] 처럼 대괄호 속에 이 이름이 들어가 있었습니다. JSON array 방식의 경우 같은 요소를 “type”이라는 이름으로 정의합니다. Type이라는 영단어의 뜻 때문에 헷갈릴 수 있으니 주의하세요.</p>
+<p><strong>message0</strong>에는 해당 블록에 표시될 string을 지정합니다. 여기에 지정된 string의 형식이 사용자가 블록을 구분할 때 쓸 블록 라벨입니다. message’0’ 이라고 숫자가 붙어 있는 것은, 필요에 따라 message1, message2 등으로 여러 개의 message를 동시에 정의할 수도 있기 때문입니다. </p>
+<p>message0에 지정되는 string은 %1, %2 와 같은 표기를 통해 input 또는 field 등이 들어갈 자리를 확보하고 있다는 것도 특징입니다. 이 key 바로 아래에 정의될 “args0” 배열에 들어 있는 input이 위에서부터 순서대로 %1, %2,… 위치에 들어간다고 할 수 있습니다. Javascript 방식에서 label을 붙일 때는 반드시 dummy input을 만든 뒤 dummy input의 field로 해당 label을  추가해 주는 방법을 쓰는 반면, JSON의 경우 저런 식으로 %로 표시된 자리 사이에 오는 string은 모두 label 취급이기 때문에 label의 정의가 더욱 쉽습니다. 물론, 저렇게 쓰지 않고 %로 표시된 자리에 label field를 할당해 주는 방법도 사용할 수 있습니다. </p>
+<p>주의하실 점은, <strong>%로 표시된 자리의 개수와 실제 input의 개수가 맞지 않으면 에러가 발생한다</strong>는 것입니다. Message0에 %3번까지 자리를 지정해 놓았다면 input도 반드시 3개가 정의되어야 합니다.</p>
+<h3 id="Input-정의"><a href="#Input-정의" class="headerlink" title="Input 정의"></a>Input 정의</h3><p>그 다음부터는 이 블록에 들어갈 input을 차례대로 정의해 줍니다. Input도 하나의 JSON array 안에 묶어서 받는데, 그 형태는 이렇습니다.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"input 1의 속성 1"</span>: <span class="string">"input 1의 값 1"</span>,</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"input 2의 속성 1"</span>: <span class="string">"input 2의 값 1"</span>,</span><br><span class="line">    <span class="attr">"input 2의 속성 2"</span>: <span class="string">"input 2의 값 2"</span>,</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">                      .</span><br><span class="line">  &#125;,</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>이 배열은 “args0”이라는 키에 할당됩니다. Input 목록 자체를 배열로 만들어서 할당하기 때문에, input 여러 개를 정의하더라도 Javascript 형식으로 정의할 때에 비해 더 간결하고 가독성이 좋아집니다.</p>
+<p>이제 각 input 객체를 하나하나 분석해 보겠습니다.</p>
+<p>첫 번째 input은 이렇게 정의되어 있습니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"input_value"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">  <span class="attr">"check"</span>: <span class="string">"Number"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>먼저 <strong>type</strong>은 문자 그대로 이 input의 ‘종류’를 나타내고 있습니다. <strong>블록 정의 맨 위에 쓰이는, 블록 이름을 나타내는 type과는 그 의미가 다릅니다.</strong> 오히려 이쪽이 type이라는 단어의 원래 뜻에 가깝게 쓰이고 있지요. 이 type에는 input_value, input_dummy, input_statement, 그 외 다양한 field의 분류명을 지정해 줍니다.</p>
+<p>블록 전체 정의에서 쓰는 type과 같은 의미로 쓰이는 key는 바로 <strong>name</strong>입니다. 이 name에 할당된 이름은 input의 고유한 이름이 되며, 후에 code generation 시 값을 읽어 올 input을 지정하는 과정에서 요긴하게 쓰입니다.</p>
+<p><strong>Check</strong>는 해당 input의 자료형을 강제해 주는 부분입니다. 이 예에서처럼 Number로 지정하면 해당 input의 자리에는 Number 형태만 받을 수 있게 되고, String으로 지정하게 되면 String 형태만 받을 수 있게 됩니다. 이렇게 형태를 정해 주지 않고 모든 형태를 다 받을 수 있게 하려면 check를 아예 생략해 버리면 됩니다.</p>
+<p>두 번째 input은 dropdown입니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"field_dropdown"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"select"</span>,</span><br><span class="line">  <span class="attr">"options"</span>: [</span><br><span class="line">                [</span><br><span class="line">                   <span class="string">"+"</span>,</span><br><span class="line">                   <span class="string">"+"</span></span><br><span class="line">                ],</span><br><span class="line">                [</span><br><span class="line">                   <span class="string">"*"</span>,</span><br><span class="line">                   <span class="string">"*"</span></span><br><span class="line">                ],</span><br><span class="line">                [</span><br><span class="line">                   <span class="string">"-"</span>,</span><br><span class="line">                   <span class="string">"-"</span></span><br><span class="line">                ],</span><br><span class="line">                [</span><br><span class="line">                    <span class="string">"/"</span>,</span><br><span class="line">                    <span class="string">"/"</span></span><br><span class="line">                ]</span><br><span class="line">               ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>type과 name의 경우 위에서 살펴본 첫 번째 value input과 동일한 의미로 쓰이고 있습니다.</p>
+<p>주목해야 할 것은 <strong>options</strong> 부분입니다. 이 부분에서는 dropdown field를 클릭하면 나타나는 선택지를 정의하고 있지요. 사용자가 보는 이름과 프로그램 내에서 사용하는 이름을 한 쌍으로 묶은 뒤 이 이름 쌍들의 집합으로 option을 정의한다는 것은 Javascript 스타일로 정의할 때와 똑같습니다. 다만, new Blockly.FieldDropdown()이라는 생성자를 사용해 option을 초기화했던 Javascript 스타일과는 달리, JSON array 스타일에서는 간단하게 options라는 key에 option 리스트를 할당하는 것만으로 정의가 완료됩니다.</p>
+<p>세 번째와 네 번째 input은 각각 빈 자리를 표현하는 dummy input과 두 번째 피연산자로 사용되는 value input을 정의하고 있습니다. 첫 번째나 두 번째 input을 정의하는 방식과 크게 다르지 않으므로 자세한 분석은 생략합니다. </p>
+<h3 id="블록-전체의-속성-정의"><a href="#블록-전체의-속성-정의" class="headerlink" title="블록 전체의 속성 정의"></a>블록 전체의 속성 정의</h3><p>이제 남은 부분에서는 블록 전체의 디자인이나 속성에 관련된 정의를 담당하고 있습니다.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"inputsInline": true,</span><br><span class="line"> "nextStatement":null,</span><br><span class="line"> "previousStatement":null,</span><br><span class="line"> "colour": 260,</span><br><span class="line"> "tooltip": "Short version of arithmetic calculations",</span><br><span class="line"> "helpUrl": ""</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>inputsInline : Javascript 스타일에서 setInputsInline() 함수와 같은 역할을 합니다. True로 설정 시 input이 inline 정렬되며, automatic 정렬을 원한다면 이 부분을 생략하면 됩니다.</p>
+</li>
+<li><p>nextStatement &amp; previousStatement : Javascript 스타일에서 setPreviousStatement() &amp; setNextStatement() 함수와 같은 역할을 합니다. null로 설정 시 해당 방향으로 어떤 타입의 블록이 붙어도 상관 없다는 뜻이 되며, Number 나 String 등을 지정해 주면 그 부분에는 지정해 준 타입을 가지는 블록만 붙을 수 있습니다. 또한 아예 connection을 만들고 싶지 않을 때는 이 부분을 생략할 수 있습니다.</p>
+</li>
+<li><p>colour : Javascript 스타일에서 setColour()함수와 같은 역할입니다. 역시 HSV 중에서 Hue만 지정 가능하며, 0~360사이의 숫자로 원하는 색상을 지정할 수 있습니다.</p>
+</li>
+<li><p>tooltip &amp; helpUrl : Javascript 스타일에서 setToolTip() &amp; setHelpUrl() 함수와 같은 역할입니다. 각각 블록에 대한 tooltip과 help url을 설정하는 부분입니다.</p>
+</li>
+</ul>
+<p>이렇듯, 블록의 기본 구조는 같기 때문에 JSON array 정의 스타일과 Javascript 정의 스타일은 많이 다른 듯 하면서도 비슷합니다. 또한 이 두 방법은 쓰임새나 장단점이 미묘하게 다르기 때문에, 두 방법을 모두 잘 알고 필요에 따라 알맞은 스타일을 사용하는 것이 필요합니다.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://vleudive.github.io/2018/01/24/5_JSON_define_block/" data-id="cjdd5r52d0006csvm2xrhm4ip" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/hot1999130" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/b/109422949033119695949/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/VleuDive" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/25/6_code_generation/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Blockly 사용법 6. Code generator 작성하기
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/01/24/4_javascript_define_block/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Blockly 사용법 4. JavaScript 스타일로 블록 정의하기</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/7_Blockly_on_web/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_7.png)" alt="Blockly 사용법 7. 웹에서 Blockly 사용하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/7_Blockly_on_web/" class="title">Blockly 사용법 7. 웹에서 Blockly 사용하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T08:10:10.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/25/6_code_generation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_6.png)" alt="Blockly 사용법 6. Code generator 작성하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/25/6_code_generation/" class="title">Blockly 사용법 6. Code generator 작성하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-25T01:58:04.000Z" itemprop="datePublished">2018-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/5_JSON_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_5.png)" alt="Blockly 사용법 5. JSON array 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/5_JSON_define_block/" class="title">Blockly 사용법 5. JSON array 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T04:55:13.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/24/4_javascript_define_block/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_4.png)" alt="Blockly 사용법 4. JavaScript 스타일로 블록 정의하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/24/4_javascript_define_block/" class="title">Blockly 사용법 4. JavaScript 스타일로 블록 정의하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-24T01:05:48.000Z" itemprop="datePublished">2018-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/23/3_input_types/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/Cover_3.png)" alt="Blockly 사용법 3. Input과 Field 이해하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blockly/">Blockly</a></p>
+                            <p class="item-title"><a href="/2018/01/23/3_input_types/" class="title">Blockly 사용법 3. Input과 Field 이해하기</a></p>
+                            <p class="item-date"><time datetime="2018-01-23T08:10:02.000Z" itemprop="datePublished">2018-01-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Blockly/">Blockly</a><span class="category-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockly/">blockly</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/">google</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blockly/" style="font-size: 10px;">blockly</a> <a href="/tags/google/" style="font-size: 10px;">google</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 VleuDive</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'little-developers-diary';
+    
+    
+    var disqus_url = 'http://vleudive.github.io/2018/01/24/5_JSON_define_block/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
